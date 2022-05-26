@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jadwal Sholat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+  <body>
+      <div class="container">
+        <h1 class="text-center">Informasi Jadwal Sholat</h1>
+        <p class="fw-bold mt-3" id="lokasi"></p><p class="fw-bold" id="prov"></p>
+        <div class="mt-2" id="list-jadwal"></div>
+        <footer>
+            <p class="text-center mt-5">Build with ❤ by Charderra Sanjaya</p>
+        </footer>
+      </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  
+      <script>
+        //fetch data from https://api.myquran.com/v1/sholat/jadwal/1104/2022/05/26
+        day = new Date().getDate();
+        month = new Date().getMonth() + 1;
+        year = new Date().getFullYear();
+        
+        var url = "https://api.myquran.com/v1/sholat/jadwal/1104/" + year + "/0" + month + "/" + day;
+        
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.data.jadwal);
+            let listJadwal = document.getElementById('list-jadwal');
+            let lokasi = document.getElementById('lokasi');
+            let prov = document.getElementById('prov');
+
+            lokasi.innerHTML = "Lokasi : " + data.data.lokasi;
+            prov.innerHTML = data.data.daerah;
+
+            listJadwal.innerHTML = `
+            <div class='table-responsive'>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Waktu</th>
+                        <th>Imsak</th>
+                        <th>Subuh</th>
+                        <th>Terbit</th>
+                        <th>Dzuhur</th>
+                        <th>Ashar</th>
+                        <th>Maghrib</th>
+                        <th>Isya</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>${data.data.jadwal.tanggal}</td>
+                        <td>${data.data.jadwal.imsak}</td>
+                        <td>${data.data.jadwal.subuh}</td>
+                        <td>${data.data.jadwal.terbit}</td>
+                        <td>${data.data.jadwal.dzuhur}</td>
+                        <td>${data.data.jadwal.ashar}</td>
+                        <td>${data.data.jadwal.maghrib}</td>
+                        <td>${data.data.jadwal.isya}</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            `;
+        })
+        .catch(error => console.error(error))
+        
+      </script>
+</body>
+</html>
