@@ -55,7 +55,7 @@
           let select = document.getElementById('lokasi-daerah');
           let value = select.options[select.selectedIndex].value;
           // List Jadwal
-          var url = "https://api.myquran.com/v1/sholat/jadwal/"+ value + "/" + year + "/0" + month + "/" + day;
+          var url = "https://api.myquran.com/v1/sholat/jadwal/"+ value + "/" + year + "/" + month + "/" + day;
           fetch(url)
           .then(response => response.json())
           .then(data => {
